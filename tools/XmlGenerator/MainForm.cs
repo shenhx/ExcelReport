@@ -55,8 +55,18 @@ namespace XmlGenerator
                 MessageBox.Show("请选择Excel模板文件！", "提示");
                 return;
             }
-            WorkbookParameterContainer workbookParameter = ParseTemplate.Parse(txtExcelTemplatePath.Text);
-            workbookParameter.Save(Path.ChangeExtension(txtExcelTemplatePath.Text, ".xml"));
+            string xmlFilePath = Path.ChangeExtension(txtExcelTemplatePath.Text, ".xml");
+            try
+            {
+                WorkbookParameterContainer workbookParameter = ParseTemplate.Parse(txtExcelTemplatePath.Text);
+                workbookParameter.Save(xmlFilePath);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("生成失败" + ex.Message);
+                return;
+            }
+            MessageBox.Show("生成成功：" + xmlFilePath);
         }
     }
 }
